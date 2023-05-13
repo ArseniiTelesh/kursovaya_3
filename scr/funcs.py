@@ -10,3 +10,11 @@ def json_read():
     return text
 
 
+def execution_list(text):
+    executed_list = []
+    for operation in text:
+        if operation.get("state") == "EXECUTED":
+            executed_list.append(operation)
+
+    return executed_list
+
