@@ -22,4 +22,11 @@ def sorted_time(executed_list):
     for operations in executed_list:
         strdate = operations.get('date')
         date = datetime.datetime.strptime(strdate, '%Y-%m-%dT%H:%M:%S.%f')
-        return (f'{date:%d.%m.%Y}')
+        return f'{date:%d.%m.%Y}'
+
+
+def description_text(executed_list):
+    for operations in executed_list:
+        description = operations.get('description')
+        return description
+
