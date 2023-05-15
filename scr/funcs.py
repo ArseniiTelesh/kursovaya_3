@@ -1,10 +1,9 @@
-import os
 import json
+import datetime
 
 
 def json_read():
-    path = os.path.join('../operations.json')
-    with open(path, 'r', encoding='utf-8') as file:
+    with open('operations.json', 'r', encoding='utf-8') as file:
         text = json.load(file)
 
     return text
@@ -18,3 +17,9 @@ def execution_list(text):
 
     return executed_list
 
+
+def sorted_time(executed_list):
+    for operations in executed_list:
+        strdate = operations.get('date')
+        date = datetime.datetime.strptime(strdate, '%Y-%m-%dT%H:%M:%S.%f')
+        return (f'{date:%d.%m.%Y}')
