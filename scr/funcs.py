@@ -73,3 +73,14 @@ def card_number_of_recipient(executed_list):
             numbers_of_account = recipient_list[1][:4] + ' ' + recipient_list[1][4:6] + "** **** " + recipient_list[1][12:]
             expected_answer = recipient_list[0] + ' ' + numbers_of_account
             return expected_answer
+
+
+def amount_and_currency(executed_list):
+    for operation in executed_list:
+        operationAmount = operation.get('operationAmount')
+
+        amount = operationAmount.get('amount')
+        currency = operationAmount.get('currency')
+        a = currency.get('name')
+        return ' '.join((amount, a))
+
