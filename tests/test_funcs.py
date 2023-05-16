@@ -1,4 +1,5 @@
-from scr.funcs import json_read, execution_list, sorted_time, description_text, card_number_of_sender
+from scr.funcs import json_read, execution_list, sorted_time, description_text, \
+    card_number_of_sender, card_number_of_recipient
 
 operations = json_read()
 
@@ -25,3 +26,10 @@ def test_card_number_of_sender():
     assert card_number_of_sender([{"from": "MasterCard 1435442169918409"}]) == 'MasterCard 1435 44** **** 8409'
     assert card_number_of_sender([{"from": "Visa Classic 6216537926639975"}]) == 'Visa Classic 6216 53** **** 9975'
     assert card_number_of_sender([{"description": "Открытие вклада"}]) is None
+
+
+def test_card_number_of_recipient():
+    assert card_number_of_recipient([{"to": "Счет 12189246980267075758"}]) == 'Счет **5758'
+    assert card_number_of_recipient([{"to": "Maestro 6890749237669619"}]) == 'Maestro 6890 74** **** 9619'
+    assert card_number_of_recipient([{"to": "Visa Gold 8702717057933248"}]) == 'Visa Gold 8702 71** **** 3248'
+    assert card_number_of_recipient([{"to": "МИР 2052809263194182"}]) == 'МИР 2052 80** **** 4182'
