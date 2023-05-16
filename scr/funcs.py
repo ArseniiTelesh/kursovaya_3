@@ -19,14 +19,33 @@ def execution_list(text):
 
 
 def sorted_time(executed_list):
-    for operations in executed_list:
-        strdate = operations.get('date')
+    for operation in executed_list:
+        strdate = operation.get('date')
         date = datetime.datetime.strptime(strdate, '%Y-%m-%dT%H:%M:%S.%f')
         return f'{date:%d.%m.%Y}'
 
 
 def description_text(executed_list):
-    for operations in executed_list:
-        description = operations.get('description')
+    for operation in executed_list:
+        description = operation.get('description')
         return description
 
+
+def card_number_of_sender(executed_list):
+    for operation in executed_list:
+        sender = operation.get('from')
+        if sender == None:
+            continue
+        sender_list = sender.split()
+        if sender_list[0] == 'Счет':
+            numbers_of_account = '**' + sender_list[1][16:]
+            expected_answer = sender_list[0] + ' ' + numbers_of_account
+            return expected_answer
+        elif sender_list[0] == 'Visa':
+            numbers_of_account = sender_list[2][:4] + ' ' + sender_list[2][4:6] + "** **** " + sender_list[2][12:]
+            expected_answer = ' '.join(sender_list[:2]) + ' ' + numbers_of_account
+            return expected_answer
+        elif sender_list[0] == 'Maestro' or 'MasterCard' or 'МИР':
+            numbers_of_account = sender_list[1][:4] + ' ' + sender_list[1][4:6] + "** **** " + sender_list[1][12:]
+            expected_answer = sender_list[0] + ' ' + numbers_of_account
+            return expected_answer
