@@ -1,5 +1,5 @@
 from scr.funcs import json_read, execution_list, sorted_time, description_text, \
-    card_number_of_sender, card_number_of_recipient
+    card_number_of_sender, card_number_of_recipient, amount_and_currency
 
 operations = json_read()
 
@@ -33,3 +33,7 @@ def test_card_number_of_recipient():
     assert card_number_of_recipient([{"to": "Maestro 6890749237669619"}]) == 'Maestro 6890 74** **** 9619'
     assert card_number_of_recipient([{"to": "Visa Gold 8702717057933248"}]) == 'Visa Gold 8702 71** **** 3248'
     assert card_number_of_recipient([{"to": "МИР 2052809263194182"}]) == 'МИР 2052 80** **** 4182'
+
+
+def test_amount_and_currency():
+    assert amount_and_currency([{"operationAmount": {"amount": "37044.95","currency": {"name": "руб.","code": "RUB"}}}]) == '37044.95 руб.'
