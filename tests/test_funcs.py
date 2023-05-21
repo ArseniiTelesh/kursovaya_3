@@ -1,5 +1,6 @@
 from scr.funcs import json_read, execution_list, sorted_time, description_text, \
     card_number_of_sender, card_number_of_recipient, amount_and_currency
+from scr.main import main
 
 operations = json_read()
 
@@ -36,4 +37,9 @@ def test_card_number_of_recipient():
 
 
 def test_amount_and_currency():
-    assert amount_and_currency([{"operationAmount": {"amount": "37044.95","currency": {"name": "руб.","code": "RUB"}}}]) == '37044.95 руб.'
+    assert amount_and_currency([{"operationAmount": {
+        "amount": "37044.95", "currency": {"name": "руб.", "code": "RUB"}}}]) == '37044.95 руб.'
+
+
+def test_main():
+    assert main() is None

@@ -3,6 +3,9 @@ import datetime
 
 
 def json_read():
+    """
+    Возвращает json-файл
+    """
     with open('operations.json', 'r', encoding='utf-8') as file:
         text = json.load(file)
 
@@ -10,6 +13,10 @@ def json_read():
 
 
 def execution_list(text):
+    """
+    Принимает json-файл и возвращает отсортированный список
+    только с выполненными операциями
+    """
     executed_list = []
     for operation in text:
         if operation.get("state") == "EXECUTED":
@@ -19,6 +26,10 @@ def execution_list(text):
 
 
 def sorted_time(executed_list):
+    """
+    Принимает остортированный список операций и
+    возвращает формат времени одной операции в соответствии с заданием
+    """
     for operation in executed_list:
         str_date = operation.get('date')
         date = datetime.datetime.strptime(str_date, '%Y-%m-%dT%H:%M:%S.%f')
@@ -26,16 +37,24 @@ def sorted_time(executed_list):
 
 
 def description_text(executed_list):
+    """
+        Принимает остортированный список операций и
+        возвращает описание одной операции
+        """
     for operation in executed_list:
         description = operation.get('description')
         return description
 
 
 def card_number_of_sender(executed_list):
+    """
+        Принимает остортированный список операций и
+        возвращает номер карты отправителя одной операции в соответствии с заданием
+        """
     for operation in executed_list:
         sender = operation.get('from')
         if sender is None:
-            continue
+            break
         sender_list = sender.split()
 
         if sender_list[0] == 'Счет':
@@ -55,6 +74,10 @@ def card_number_of_sender(executed_list):
 
 
 def card_number_of_recipient(executed_list):
+    """
+    Принимает остортированный список операций и
+    возвращает номер карты получателя одной операции в соответствии с заданием
+    """
     for operation in executed_list:
         recipient = operation.get('to')
         recipient_list = recipient.split()
@@ -76,11 +99,14 @@ def card_number_of_recipient(executed_list):
 
 
 def amount_and_currency(executed_list):
+    """
+    Принимает остортированный список операций и
+    возвращает сумму и валюту одной операции в соответствии с заданием
+    """
     for operation in executed_list:
-        operationAmount = operation.get('operationAmount')
+        operation_amount = operation.get('operationAmount')
 
-        amount = operationAmount.get('amount')
-        currency = operationAmount.get('currency')
-        a = currency.get('name')
-        return ' '.join((amount, a))
-
+        amount = operation_amount.get('amount')
+        currency = operation_amount.get('currency')
+        name_of_currency = currency.get('name')
+        return ' '.join((amount, name_of_currency))
