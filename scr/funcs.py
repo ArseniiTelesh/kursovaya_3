@@ -15,12 +15,17 @@ def json_read():
 def execution_list(text):
     """
     Принимает json-файл и возвращает отсортированный список
-    только с выполненными операциями
+    только с выполненными операциями, также сортирует по времени
     """
     executed_list = []
     for operation in text:
         if operation.get("state") == "EXECUTED":
             executed_list.append(operation)
+
+    executed_list = sorted(
+        executed_list, key=lambda x: datetime.datetime.strptime(x['date'], '%Y-%m-%dT%H:%M:%S.%f'), reverse=False
+    )
+
 
     return executed_list
 
